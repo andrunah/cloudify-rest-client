@@ -106,6 +106,18 @@ class UsersClient(object):
         response = self.api.post('/users/{0}'.format(username), data=data)
         return User(response)
 
+    def add_role(self, username, role):
+        data = {'role': role}
+        response = self.api.post(
+            '/users/roles/{0}'.format(username), data=data)
+        return User(response)
+
+    def remove_role(self, username, role):
+        data = {'role': role}
+        response = self.api.delete(
+            '/users/roles/{0}'.format(username), data=data)
+        return User(response)
+
     def get(self, username, **kwargs):
         response = self.api.get(
             '/users/{0}'.format(username),
