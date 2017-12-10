@@ -13,12 +13,14 @@
 #    * See the License for the specific language governing permissions and
 #    * limitations under the License.
 
-from . import (
-    executions,
-    logs,
-    node_templates,
-    nodes,
-    plugins,
-    service_templates,
-    services,
-)
+
+class _Wrapper(object):
+    def __init__(self, service_template):
+        self._service_template = service_template
+
+    def __getattr__(self, item):
+        return self._service_template[item]
+
+
+def wrap(obj_dict, cls_name):
+    return type('Rest{0}'.format(cls_name), (_Wrapper, ), {})(obj_dict)
